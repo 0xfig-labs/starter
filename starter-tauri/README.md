@@ -10,6 +10,7 @@ A small Tauri 2 + React + TypeScript template for desktop apps.
 - React Router browser routing
 - next-themes for theme switching
 - Sonner toast
+- Zustand for client-side state management
 - Base UI + shadcn-style local components
 - SQLite via local Rust commands
 - Nub for Node package/tool execution

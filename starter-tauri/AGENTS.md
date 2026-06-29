@@ -13,6 +13,7 @@ This repository is a reusable Tauri desktop app template. Keep it small, boring,
 - Base UI / shadcn-style local UI primitives
 - Sonner for global toast
 - next-themes for theme switching
+- Zustand for client-side state management
 - i18next + react-i18next for i18n
 - SQLite via Rust `libsql`, stored under the Tauri app data directory
 - Vitest for minimal unit tests
@@ -67,7 +68,7 @@ src/
   layouts/          route layouts and shell UI
   lib/              compatibility helpers used by shadcn, especially utils.ts
   pages/            thin route entry files
-  shared/           cross-feature APIs, hooks, i18n
+  shared/           cross-feature APIs, hooks, stores, i18n
   styles/           global CSS and design tokens
 src-tauri/
   src/              Rust commands, app database, Tauri setup
@@ -144,7 +145,7 @@ src-tauri/
   - `ui/` feature UI
 - Keep async UI states explicit: loading, submitting, empty, error.
 - Prefer a feature-local hook for data fetching, like `src/features/notes/model/use-notes.ts`.
-- Do not add React Query/Zustand/etc. unless a real app need appears.
+- Zustand stores live in `src/shared/stores/`.
 
 ### Assets and styles
 

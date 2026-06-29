@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import { HomeIcon, NotebookTextIcon, SettingsIcon } from "lucide-react";
+import { HomeIcon, NotebookTextIcon, PlusIcon, SettingsIcon } from "lucide-react";
 
+import { CounterPage } from "@/pages/counter";
 import { DashboardPage } from "@/pages/dashboard";
 import { NotesPage } from "@/pages/notes";
 import { SettingsPage } from "@/pages/settings";
@@ -22,6 +23,13 @@ export const appRoutes: AppRoute[] = [
     translationKey: "nav.dashboard",
     element: <DashboardPage />,
     nav: { icon: <HomeIcon /> },
+  },
+  {
+    path: "/counter",
+    title: "Counter",
+    translationKey: "nav.counter",
+    element: <CounterPage />,
+    nav: { icon: <PlusIcon /> },
   },
   {
     path: "/notes",

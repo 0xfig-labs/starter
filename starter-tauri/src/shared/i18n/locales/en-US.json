@@ -5,10 +5,18 @@
   },
   "nav": {
     "dashboard": "Dashboard",
+    "counter": "Counter",
     "notes": "Notes",
     "settings": "Settings"
   },
   "pages": {
+    "counter": {
+      "title": "Counter",
+      "description": "Zustand state management example.",
+      "increment": "Increment",
+      "decrement": "Decrement",
+      "reset": "Reset"
+    },
     "dashboard": {
       "title": "Starter Tauri",
       "description": "React Router, app provider, local state, and SQLite-backed Tauri commands are wired in.",
