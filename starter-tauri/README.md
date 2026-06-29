@@ -47,8 +47,7 @@ Keep `src/app/config.tsx`, `package.json`, `src-tauri/Cargo.toml`, and `src-taur
 - `src/app/` owns app bootstrapping, providers, router, and app-wide state.
 - `src/layouts/` owns route layouts and shell UI.
 - `src/components/app/` owns reusable app-level components such as page headers and state views.
-- `src/pages/` owns route entry files; keep page files thin.
-- `src/features/` owns feature code, grouped by `api/`, `model/`, and `ui/`.
+- `src/pages/` owns route entry files. 可以直接在页面文件中编写逻辑，也可以在 `src/pages/<name>/` 下组织相关的 api/hooks/types。
 - `src/shared/` owns cross-feature APIs and hooks.
 - `src/styles/` owns global CSS and design-token entrypoints.
 - `src/assets/` owns bundled assets imported from code, including the example logo.
@@ -69,15 +68,11 @@ The default capability only enables core app APIs and opener. File system, shell
 1. Add `src/pages/<route>/index.tsx`.
 2. Add it to `src/app/navigation.tsx`; router, breadcrumb title, and sidebar nav derive from that config.
 
-### Add a feature
-
-Put feature code under `src/features/<name>/` using the existing `api/`, `model/`, and `ui/` split. Keep `src/pages/` as route entry files.
-
 ### Add a Tauri command
 
 1. Add a Rust module under `src-tauri/src/`.
 2. Register the command in `src-tauri/src/lib.rs`.
-3. Add a typed wrapper in `src/shared/api/` or a feature `api/` folder.
+3. Add a typed wrapper in `src/shared/api/` or a page `api.ts` file.
 
 ### Enable a Tauri plugin
 
@@ -96,5 +91,5 @@ Use `nubx shadcn ...` for shadcn commands; `shadcn` is a dev-only tool.
 - Use `toast` from `sonner`; global `Toaster` is mounted in `src/app/providers.tsx`.
 - Use `LoadingState`, `EmptyState`, and `ErrorState` for common async states.
 - Put reusable app components in `src/components/app/`; keep shadcn primitives in `src/components/ui/`.
-- Keep data-fetching hooks near the feature, for example `src/features/notes/model/use-notes.ts`.
+- Keep data-fetching hooks colocated near the page, for example `src/pages/notes/use-notes.ts`.
 - Environment examples live in `.env.example`; only expose browser variables with the `VITE_` prefix.

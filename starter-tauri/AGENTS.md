@@ -64,7 +64,6 @@ src/
   assets/           bundled assets imported by code
   components/app/   reusable app-level components
   components/ui/    shadcn/Base UI primitives; keep generated style intact
-  features/         feature modules grouped by api/model/ui
   layouts/          route layouts and shell UI
   lib/              compatibility helpers used by shadcn, especially utils.ts
   pages/            thin route entry files
@@ -90,7 +89,7 @@ src-tauri/
 - `src/app/router.tsx` derives routes from `appRoutes`.
 - `src/layouts/default/default-layout.tsx` should derive breadcrumb/page title keys from `src/app/navigation.tsx`, not keep a second route map.
 - `src/layouts/default/default-layout.tsx` owns the default shell and renders pages through `<Outlet />`.
-- `src/pages/<route>/index.tsx` should be a thin route entry. Put real feature code under `src/features/<feature>/`.
+- `src/pages/<route>/index.tsx` 可以直接在页面文件中编写逻辑，也可以在 `src/pages/<route>/` 下组织相关的 api/hooks/types。
 - Add a route by updating `src/app/navigation.tsx` and adding the page file.
 
 ### Components
@@ -103,7 +102,7 @@ src-tauri/
   - `ErrorState`
   - `ThemeToggle`
   - `User`
-- Do not put business-specific widgets into `components/app`; place them under `features/<name>/ui`.
+- Do not put business-specific widgets into `components/app`; place them under `src/pages/<name>/ui` or colocate them near the page.
 
 ### shadcn
 
@@ -139,12 +138,11 @@ src-tauri/
 
 ### Data and feature code
 
-- Feature code goes under `src/features/<name>/`:
-  - `api/` typed frontend API wrappers
-  - `model/` types and hooks
-  - `ui/` feature UI
+- Write logic directly in `src/pages/<name>/` or colocate with your components:
+  - `api.ts` typed frontend API wrappers
+  - `types.ts` types
+  - `use-<name>.ts` hooks
 - Keep async UI states explicit: loading, submitting, empty, error.
-- Prefer a feature-local hook for data fetching, like `src/features/notes/model/use-notes.ts`.
 - Zustand stores live in `src/shared/stores/`.
 
 ### Assets and styles
@@ -166,7 +164,7 @@ src-tauri/
 - SQLite initialization lives in `src-tauri/src/db.rs`.
 - Example note commands live in `src-tauri/src/notes.rs`.
 - Frontend Tauri invocation wrapper lives in `src/shared/api/tauri.ts`.
-- Feature-specific command wrappers should live under `src/features/<feature>/api/`.
+- Feature-specific command wrappers should live in `src/pages/<name>/api.ts` or colocated near the page.
 - Validate inputs at the Rust command boundary.
 - Prefer SQL statements that return the affected row directly, such as SQLite `RETURNING`, over follow-up lookups like `last_insert_rowid()`.
 - Keep Tauri plugins and `src-tauri/capabilities/default.json` permissions aligned. If you register a plugin, add only the matching minimal permissions.

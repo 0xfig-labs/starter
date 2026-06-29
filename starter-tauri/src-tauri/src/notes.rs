@@ -1,3 +1,4 @@
+// Example: Tauri SQLite CRUD commands for the notes feature
 use libsql::params;
 use serde::{Deserialize, Serialize};
 use tauri::State;

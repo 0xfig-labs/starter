@@ -1,3 +1,4 @@
+// Example: Zustand store — 计数器状态
 import { create } from "zustand";
 
 type CounterState = {

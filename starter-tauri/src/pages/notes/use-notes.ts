@@ -1,6 +1,7 @@
+// Example: Notes 数据获取 hook
 import { useCallback, useEffect, useState } from "react";
 
-import { notesApi } from "@/features/notes/api/notes";
+import { notesApi } from "./api";
 import type { Note } from "./types";
 
 export function useNotes() {

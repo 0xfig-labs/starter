@@ -22,6 +22,7 @@ pub async fn init(app: &tauri::App) -> anyhow::Result<AppDb> {
         .await?;
     let conn = db.connect()?;
 
+    // Example: notes table — remove when building a real app.
     conn.execute(
         "CREATE TABLE IF NOT EXISTS notes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,3 +1,4 @@
+// Example: Notes 数据类型
 export type Note = {
   id: number;
   title: string;

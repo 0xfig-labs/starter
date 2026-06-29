@@ -1,3 +1,4 @@
+// Example: notes module is a Tauri SQLite CRUD example — remove when building a real app.
 mod db;
 mod notes;
 

@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import { HomeIcon, NotebookTextIcon, PlusIcon, SettingsIcon } from "lucide-react";
 
-import { CounterPage } from "@/pages/counter";
+// Example routes include /counter and /notes — remove them when building a real app.
 import { DashboardPage } from "@/pages/dashboard";
-import { NotesPage } from "@/pages/notes";
+import CounterPage from "@/pages/counter";
+import NotesPage from "@/pages/notes";
 import { SettingsPage } from "@/pages/settings";
 
 export type AppRoute = {
