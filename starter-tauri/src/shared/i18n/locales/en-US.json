@@ -1,0 +1,53 @@
+{
+  "app": {
+    "name": "Starter App",
+    "description": "Template"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "notes": "Notes",
+    "settings": "Settings"
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Starter Tauri",
+      "description": "React Router, app provider, local state, and SQLite-backed Tauri commands are wired in.",
+      "openNotes": "Open notes",
+      "templateRule": "Template rule",
+      "templateRuleDesc": "Add real routes, stores, and database tables only when the app needs them."
+    },
+    "notes": {
+      "title": "Notes",
+      "description": "SQLite-backed Tauri command example.",
+      "defaultTitle": "First note",
+      "defaultBody": "Created from the React example.",
+      "reload": "Reload",
+      "add": "Add",
+      "adding": "Adding…",
+      "errorTitle": "Notes failed to load",
+      "loading": "Loading notes",
+      "emptyTitle": "No notes yet",
+      "emptyDescription": "Create the first note to test persistence."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Theme is powered by next-themes and persisted automatically."
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "The route does not exist in this app.",
+      "backToDashboard": "Back to dashboard"
+    }
+  },
+  "language": {
+    "label": "Language",
+    "en-US": "English",
+    "zh-CN": "简体中文"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  }
+}

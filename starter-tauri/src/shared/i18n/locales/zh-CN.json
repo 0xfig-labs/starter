@@ -1,0 +1,53 @@
+{
+  "app": {
+    "name": "Starter App",
+    "description": "模板"
+  },
+  "nav": {
+    "dashboard": "仪表盘",
+    "notes": "笔记",
+    "settings": "设置"
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Starter Tauri",
+      "description": "React Router、应用提供器、本地状态和基于 SQLite 的 Tauri 命令已全部就绪。",
+      "openNotes": "打开笔记",
+      "templateRule": "模板规则",
+      "templateRuleDesc": "只在应用真正需要时才添加路由、存储和数据库表。"
+    },
+    "notes": {
+      "title": "笔记",
+      "description": "基于 SQLite 的 Tauri 命令示例。",
+      "defaultTitle": "第一条笔记",
+      "defaultBody": "从 React 示例创建。",
+      "reload": "重新加载",
+      "add": "添加",
+      "adding": "添加中…",
+      "errorTitle": "笔记加载失败",
+      "loading": "正在加载笔记",
+      "emptyTitle": "还没有笔记",
+      "emptyDescription": "创建第一条笔记来测试持久化。"
+    },
+    "settings": {
+      "title": "设置",
+      "description": "主题由 next-themes 驱动并自动持久化。"
+    },
+    "notFound": {
+      "title": "页面未找到",
+      "description": "此路由在应用中不存在。",
+      "backToDashboard": "返回仪表盘"
+    }
+  },
+  "language": {
+    "label": "语言",
+    "en-US": "English",
+    "zh-CN": "简体中文"
+  },
+  "theme": {
+    "label": "主题",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "系统"
+  }
+}
