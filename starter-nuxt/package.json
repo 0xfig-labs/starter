@@ -1,0 +1,39 @@
+{
+  "name": "starter-nuxt",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build --preset=cloudflare_pages",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "typecheck": "nuxt typecheck",
+    "preview:pages": "nuxt build --preset=cloudflare_pages && pnpm dlx wrangler pages dev dist",
+    "deploy:pages": "nuxt build --preset=cloudflare_pages && pnpm dlx wrangler pages deploy dist",
+    "check": "nuxt typecheck && eslint .",
+    "verify": "pnpm check && pnpm build"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.114",
+    "@iconify-json/simple-icons": "^1.2.87",
+    "@nuxt/hints": "1.1.3",
+    "@nuxt/image": "2.0.0",
+    "@nuxt/scripts": "1.3.0",
+    "@nuxt/ui": "^4.9.0",
+    "@nuxtjs/i18n": "10.4.0",
+    "@nuxtjs/seo": "5.3.1",
+    "@pinia/nuxt": "0.11.3",
+    "nuxt": "^4.4.8",
+    "tailwindcss": "^4.3.1"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.16.0",
+    "eslint": "^10.6.0",
+    "rolldown": "^1.1.3",
+    "typescript": "^6.0.3",
+    "vite-plus": "catalog:",
+    "vue-tsc": "^3.3.5"
+  },
+  "packageManager": "pnpm@11.9.0"
+}

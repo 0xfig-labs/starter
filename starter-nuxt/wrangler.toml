@@ -1,0 +1,6 @@
+name = "starter-nuxt"
+compatibility_date = "2026-06-30"
+pages_build_output_dir = "dist"
+
+# Cloudflare Pages SSR runs Nuxt through Pages Functions.
+# Add bindings here when the app actually needs them, e.g. D1/KV/R2.
