@@ -4,8 +4,8 @@ export default defineAppConfig({
   ],
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
+    navigationBarBackgroundColor: '#4f46e5',
+    navigationBarTitleText: 'starter-taro',
+    navigationBarTextStyle: 'white'
   }
 })

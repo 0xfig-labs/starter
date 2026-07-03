@@ -19,7 +19,7 @@ import Taro from '@tarojs/taro'
 
 function onQueryError(err: unknown) {
   const msg =
-    err instanceof Error ? err.message : (err as any)?.message ?? '请求失败'
+    err instanceof Error ? err.message : (err as { message?: string })?.message ?? '请求失败'
   Taro.showToast({ title: msg, icon: 'none' })
 }
 
@@ -33,32 +33,27 @@ export function useAppQuery<TData, TError = Error>(
 ) {
   return useQuery<TData, TError, TData, QueryKey>({
     ...options,
-    // 全局兜底：网络重连后自动刷新、窗口聚焦时刷新（H5 有效）
-    refetchOnWindowFocus: false,
-    // 默认 5 分钟缓存
-    staleTime: 5 * 60 * 1000,
-    // 默认 30 分钟垃圾回收
-    gcTime: 30 * 60 * 1000,
-    // 默认 3 次重试
-    retry: 2,
   })
 }
 
 // ─── 封装 useMutation ───────────────────────────────────────
 
-export function useAppMutation<TData, TError = Error, TVariables = void>(
-  options: UseMutationOptions<TData, TError, TVariables>,
+export function useAppMutation<
+  TData,
+  TError = Error,
+  TVariables = void,
+  TOnMutateResult = unknown,
+>(
+  options: UseMutationOptions<TData, TError, TVariables, TOnMutateResult>,
 ) {
-  const queryClient = useQueryClient()
-
-  return useMutation<TData, TError, TVariables>({
+  return useMutation<TData, TError, TVariables, TOnMutateResult>({
     ...options,
-    onError: (err, vars, ctx) => {
+    onError: (err, vars, onMutateResult, ctx) => {
       onQueryError(err)
-      options.onError?.(err, vars, ctx)
+      options.onError?.(err, vars, onMutateResult, ctx)
     },
-    onSettled: (data, err, vars, ctx) => {
-      options.onSettled?.(data, err, vars, ctx)
+    onSettled: (data, err, vars, onMutateResult, ctx) => {
+      options.onSettled?.(data, err, vars, onMutateResult, ctx)
     },
   })
 }

@@ -42,15 +42,15 @@ export function injectTokenGetter(getter: () => string | null) {
 // ─── 拦截器 ─────────────────────────────────────────────────
 
 Taro.addInterceptor((chain) => {
-  const { requestPrams } = chain
+  const { requestParams } = chain
   const token = _getToken?.()
   if (token) {
-    requestPrams.header = {
-      ...requestPrams.header,
+    requestParams.header = {
+      ...requestParams.header,
       Authorization: `Bearer ${token}`,
     }
   }
-  return chain.proceed(requestPrams)
+  return chain.proceed(requestParams)
 })
 
 // ─── 核心请求方法 ───────────────────────────────────────────
@@ -63,34 +63,41 @@ async function request<T = unknown>(
 ): Promise<ApiResponse<T>> {
   const baseURL = option?.baseURL ?? DEFAULT_BASE_URL
   const fullURL = url.startsWith('http') ? url : `${baseURL}${url}`
+  const requestOption = { ...option }
+  const silent = requestOption.silent
+  delete requestOption.baseURL
+  delete requestOption.silent
 
-  try {
-    const res = await Taro.request({
-      url: fullURL,
-      method,
-      data,
-      header: { 'Content-Type': 'application/json', ...option?.header },
-      timeout: option?.timeout ?? 15000,
-      dataType: option?.dataType ?? 'json',
-    })
+  const res = await Taro.request({
+    ...requestOption,
+    url: fullURL,
+    method,
+    data,
+    header: { 'Content-Type': 'application/json', ...option?.header },
+    timeout: option?.timeout ?? 15000,
+    dataType: option?.dataType ?? 'json',
+  }).catch((err) => {
+    const msg = (err as { errMsg?: string })?.errMsg ?? '网络异常，请重试'
 
-    const body = res.data as ApiResponse<T>
-
-    // 业务错误统一处理
-    if (body.code !== 0 && body.code !== 200 && !option?.silent) {
-      Taro.showToast({ title: body.message || '请求失败', icon: 'none' })
-    }
-
-    return body
-  } catch (err: any) {
-    const msg = err?.errMsg ?? '网络异常，请重试'
-
-    if (!option?.silent) {
+    if (!silent) {
       Taro.showToast({ title: msg, icon: 'none' })
     }
 
-    return { code: -1, message: msg, data: null as unknown as T }
+    throw new Error(msg)
+  })
+
+  const body = res.data as ApiResponse<T>
+
+  // 业务错误统一处理
+  if (body.code !== 0 && body.code !== 200) {
+    const msg = body.message || '请求失败'
+    if (!silent) {
+      Taro.showToast({ title: msg, icon: 'none' })
+    }
+    throw new Error(msg)
   }
+
+  return body
 }
 
 // ─── 导出 HTTP 方法 ─────────────────────────────────────────

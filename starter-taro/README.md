@@ -1,6 +1,8 @@
 # starter-taro
 
-Taro 4 小程序快速启动模板。React 18 + TypeScript + Vite，集成了企业级项目常用的技术栈。
+Taro 4 小程序 starter。基于 React 18 + TypeScript + Vite，优先支持微信小程序，同时保留 H5 和其他 Taro 平台构建能力。
+
+这个模板不绑定具体业务：首页是一个中性的「模板启动台」，用于展示工程能力和常用小程序组件积木。
 
 ## 技术栈
 
@@ -15,206 +17,180 @@ Taro 4 小程序快速启动模板。React 18 + TypeScript + Vite，集成了企
 | 表单 | React Hook Form 7 |
 | HTTP 请求 | Taro.request 封装 |
 | 日期 | Day.js (中文 locale) |
-| CSS 方案 | UnoCSS 66 (原子化 CSS) |
+| CSS | UnoCSS 66 |
 | 图标 | Iconify (mingcute / logos / svg-spinners) |
 | 工具库 | lodash-es |
 
 ## 快速开始
 
 ```bash
-# 1. 安装依赖
 pnpm install
 
-# 2. 启动开发
-pnpm dev:weapp     # 微信小程序
-pnpm dev:h5        # H5 页面
+pnpm dev:weapp      # 微信小程序开发
+pnpm dev:h5         # H5 开发
+
+pnpm typecheck      # TypeScript 检查
+pnpm lint           # ESLint 检查
+```
+
+生产构建：
+
+```bash
+pnpm build:weapp
+pnpm build:h5
 ```
 
 ## 目录结构
 
-```
+```text
 src/
-├── app.tsx               # 应用入口（QueryClientProvider）
-├── app.css               # 全局样式
-├── app.config.ts         # 页面注册 & 窗口配置
+├── app.tsx                 # 应用入口（QueryClientProvider）
+├── app.css                 # 全局样式
+├── app.config.ts           # 页面注册 & 窗口配置
+├── components/
+│   └── index.tsx           # 通用模板组件
+├── hooks/
+│   ├── queries.ts          # TanStack Query 封装
+│   └── index.ts
+├── pages/
+│   └── index/
+│       ├── index.tsx       # 中性 starter 首页
+│       ├── index.config.ts
+│       └── index.css
 ├── services/
-│   ├── request.ts        # HTTP 客户端（拦截器 / Token / 错误处理）
+│   ├── request.ts          # HTTP 客户端
 │   └── index.ts
 ├── stores/
-│   ├── useAuthStore.ts   # 认证状态（Zustand + 持久化）
+│   ├── useAuthStore.ts     # 认证状态（Zustand + Storage）
 │   ├── useCounterStore.ts
 │   └── index.ts
-├── hooks/
-│   ├── queries.ts        # TanStack Query 封装
-│   └── index.ts
-├── utils/
-│   ├── validation.ts     # Zod 校验 schemas
-│   ├── dayjs.ts          # Day.js 实例
-│   └── index.ts
-└── pages/
-    └── index/            # 首页
-        ├── index.tsx
-        ├── index.config.ts
-        └── index.css
+└── utils/
+    ├── dayjs.ts            # Day.js 实例
+    ├── validation.ts       # Zod schemas
+    └── index.ts
 ```
 
-## 开发命令
+## 内置模板组件
 
-| 命令 | 说明 |
+组件位于 `src/components/index.tsx`，保持轻量，方便复制、删除和改造。
+
+| 组件 | 用途 |
 |------|------|
-| `pnpm dev:weapp` | 微信小程序开发（热重载） |
-| `pnpm build:weapp` | 微信小程序生产构建 |
-| `pnpm dev:h5` | H5 开发 |
-| `pnpm build:h5` | H5 生产构建 |
-| `pnpm dev:alipay` | 支付宝小程序 |
-| `pnpm dev:swan` | 百度小程序 |
-| `pnpm dev:tt` | 抖音小程序 |
-| `pnpm dev:jd` | 京东小程序 |
+| `PageShell` | 页面背景、安全区、底部固定区域骨架 |
+| `AppHeader` | 标题、副标题、右侧操作区 |
+| `Card` | 通用卡片容器 |
+| `Section` | 内容区块标题 + 描述 + extra |
+| `Badge` | 状态标签 |
+| `ActionGrid` | 快捷入口宫格 |
+| `StatCard` | 指标卡片 |
+| `ListItem` | 设置项/菜单项/列表项 |
+| `EmptyState` | 空状态 |
+| `LoadingState` | 加载骨架 |
+| `ErrorState` | 错误状态 |
 
-## 使用指南
+示例：
 
-### HTTP 请求
+```tsx
+import { ActionGrid, PageShell, Section } from '@/components'
+
+export default function Page() {
+  return (
+    <PageShell>
+      <Section title="功能入口" desc="替换为你的业务模块">
+        <ActionGrid
+          items={[
+            { title: '订单', icon: 'i-mingcute-list-check-line' },
+            { title: '设置', icon: 'i-mingcute-settings-3-line' },
+          ]}
+        />
+      </Section>
+    </PageShell>
+  )
+}
+```
+
+## HTTP 请求
 
 ```typescript
 import { http } from '@/services'
 
-// GET
 const { data } = await http.get<User[]>('/users')
-
-// POST
 const res = await http.post('/users', { name: 'test' })
-
-// 带查询参数
-const list = await http.get<Item[]>('/items', {
-  header: { 'X-Custom': 'value' },
-})
 ```
 
-Token 自动从 Zustand auth store 读取并注入请求头。
+Token 自动从 auth store 读取并注入请求头；错误会抛出，便于 TanStack Query 接管重试和错误态。
 
-### 状态管理
-
-```typescript
-import { useCounterStore, useAuthStore } from '@/stores'
-
-function Page() {
-  const { count, increment } = useCounterStore()
-  const { isLogin, user, login } = useAuthStore()
-
-  // Auth store 自动持久化到 Storage
-  login('token', { id: '1', nickname: 'foo', avatar: '' })
-}
-```
-
-### 服务端数据
+## 服务端数据
 
 ```typescript
 import { useAppQuery, useAppMutation } from '@/hooks'
+import { http } from '@/services'
 
-// 查询
 const { data, isLoading } = useAppQuery({
   queryKey: ['todos'],
   queryFn: () => http.get<Todo[]>('/todos').then(r => r.data),
 })
 
-// 变更（自动失效查询）
 const mutation = useAppMutation({
   mutationFn: (title: string) => http.post('/todos', { title }),
-  onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
 })
 ```
 
-### 表单校验
+## 状态管理
+
+```typescript
+import { useAuthStore, useCounterStore } from '@/stores'
+
+const { count, increment } = useCounterStore()
+const { isLogin, user, login } = useAuthStore()
+```
+
+`useAuthStore` 使用 Taro Storage 持久化，适配小程序环境。
+
+## 表单校验
 
 ```typescript
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, type LoginForm } from '@/utils'
 
-const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
+const form = useForm<LoginForm>({
   resolver: zodResolver(loginSchema),
 })
 ```
 
-预设校验规则：
+内置：`phoneSchema`、`emailSchema`、`passwordSchema`、`loginSchema`、`registerSchema`。
 
-- `phoneSchema` — 中国大陆手机号
-- `emailSchema` — 邮箱
-- `passwordSchema` — 8~32 位含字母数字
-- `loginSchema` / `registerSchema` — 登录/注册表单
+## 样式与图标
 
-### 日期处理
-
-```typescript
-import { dayjs } from '@/utils'
-
-dayjs().format('YYYY-MM-DD HH:mm:ss')         // 2026-07-01 12:00:00
-dayjs('2026-07-01').fromNow()                 // 3 天前（中文）
-dayjs().isToday()                              // true
-dayjs.duration(7200).humanize()               // 2 小时（中文）
-```
-
-### 样式
-
-使用 UnoCSS 原子化类：
+优先使用 UnoCSS：
 
 ```tsx
-<View className="flex items-center justify-between p-6 bg-white rounded-12">
-  <Text className="text-28 font-bold text-gray-800">标题</Text>
-  <View className="i-mingcute-setting text-32 text-blue-500" />
+<View className="flex-between rounded-20 bg-white p-5">
+  <Text className="text-28 font-bold text-slate-900">标题</Text>
+  <View className="i-mingcute-settings-3-line text-32 text-blue-500" />
 </View>
 ```
 
-快捷方式：
+项目约定：`text-28` 表示 `28px` 设计稿字号。`uno.config.ts` 已覆盖 Uno 默认字号规则，避免 H5 下 `text-40` 被解析成 `10rem`。
 
-- `flex-center` — flex + items-center + justify-center
-- `flex-between` — flex + items-center + justify-between
-- `text-ellipsis` — 单行省略
+常用快捷类：
 
-图标使用：
-
-```tsx
-// MingCute 图标集
-<View className="i-mingcute-add text-32" />
-<View className="i-mingcute-delete text-32 text-red-500" />
-<View className="i-mingcute-setting-line text-32" />
-
-// 技术栈 logo
-<View className="i-logos-taro text-40" />
-<View className="i-logos-react text-40" />
-
-// 加载动画
-<View className="i-svg-spinners-ring-resize text-40 text-blue-500" />
-```
-
-## 配置参考
-
-**`config/index.ts`** 中可配置：
-
-- `designWidth` — 设计稿宽度（默认 750）
-- `compiler.vitePlugins` — 自定义 Vite 插件
-- `defineConstants` — 编译时常量
-
-**`uno.config.ts`** 中可配置：
-
-- `presets` — UnoCSS 预设
-- `rules` — 自定义规则
-- `shortcuts` — 快捷组合
-- 图标集合（当前加载 mingcute / logos / svg-spinners）
+- `flex-center`
+- `flex-between`
+- `text-ellipsis`
 
 ## 环境变量
 
 在 `.env.development` / `.env.production` 中配置：
 
-```
+```env
 VITE_API_BASE_URL=https://api.example.com
 ```
 
 通过 `import.meta.env.VITE_*` 访问。
 
-## 与 AGENTS.md 的关系
+## 文档分工
 
-- **README.md**（本文件）→ 面向人类开发者，侧重使用方法和命令
-- **AGENTS.md** → 面向 AI 编码代理（Claude Code / Copilot），侧重编码约定和模式参考
-
-两个文件均可作为 AI 辅助开发的上下文输入。
+- `README.md`：给开发者看的使用说明
+- `AGENTS.md`：给 AI 编码代理看的项目约定
