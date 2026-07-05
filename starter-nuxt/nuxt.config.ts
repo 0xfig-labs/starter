@@ -1,8 +1,9 @@
+import tailwindcss from '@tailwindcss/vite'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
-    '@nuxt/ui',
+    'shadcn-nuxt',
     '@nuxt/hints',
     '@nuxt/image',
     '@nuxt/scripts',
@@ -11,24 +12,36 @@ export default defineNuxtConfig({
     '@pinia/nuxt'
   ],
 
-  devServer: {
-    port: 27167
-  },
-
   devtools: {
     enabled: true
   },
 
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/tailwind.css'],
+
+  site: {
+    name: 'Indie Starter',
+    url: 'https://example.pages.dev'
+  },
 
   routeRules: {
-    '/': { prerender: true }
+    '/': { prerender: true },
+    '/api/**': { prerender: false }
+  },
+
+  devServer: {
+    port: 27167
   },
 
   compatibilityDate: '2026-06-30',
 
   nitro: {
     preset: 'cloudflare_pages'
+  },
+
+  vite: {
+    plugins: [
+      tailwindcss()
+    ]
   },
 
   eslint: {
@@ -43,11 +56,17 @@ export default defineNuxtConfig({
   i18n: {
     defaultLocale: 'en',
     locales: [
-      { code: 'en', language: 'en-US', name: 'English' }
+      { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
+      { code: 'zh', language: 'zh-CN', name: '中文', file: 'zh.json' }
     ]
   },
 
   ogImage: {
     enabled: false
+  },
+
+  shadcn: {
+    prefix: '',
+    componentDir: '@/components/ui'
   }
 })

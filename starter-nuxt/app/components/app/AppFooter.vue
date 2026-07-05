@@ -3,21 +3,19 @@ const appConfig = useAppConfig()
 </script>
 
 <template>
-  <UFooter>
-    <template #left>
-      <p class="text-sm text-muted">
-        © {{ new Date().getFullYear() }} {{ appConfig.site.name }}
+  <footer class="border-t">
+    <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <p class="text-sm text-muted-foreground">
+        &copy; {{ new Date().getFullYear() }} {{ appConfig.site.name }}
       </p>
-    </template>
-
-    <template #right>
-      <UButton
-        to="/api/health"
-        label="Status"
-        color="neutral"
+      <Button
         variant="ghost"
         size="sm"
-      />
-    </template>
-  </UFooter>
+        as-child
+      >
+        <!-- eslint-disable-next-line link-checker/valid-route, link-checker/valid-sitemap-link -->
+        <NuxtLink to="/api/health">Status</NuxtLink>
+      </Button>
+    </div>
+  </footer>
 </template>

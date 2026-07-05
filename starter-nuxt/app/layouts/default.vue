@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useColorMode } from '@vueuse/core'
+
 const appConfig = useAppConfig()
+
+useColorMode({
+  attribute: 'class',
+  storageKey: 'shadcn-color-scheme'
+})
 
 useHead({
   meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
@@ -8,22 +15,18 @@ useHead({
 })
 
 useSeoMeta({
-  title: appConfig.site.name,
   description: appConfig.site.description,
-  ogTitle: appConfig.site.name,
   ogDescription: appConfig.site.description,
   twitterCard: 'summary_large_image'
 })
 </script>
 
 <template>
-  <div class="min-h-dvh flex flex-col">
+  <div class="min-h-svh flex flex-col">
     <AppHeader />
-
-    <UMain class="flex-1">
+    <main class="flex-1">
       <slot />
-    </UMain>
-
+    </main>
     <AppFooter />
   </div>
 </template>

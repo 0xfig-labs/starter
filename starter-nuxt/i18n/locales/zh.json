@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "features": "功能",
+    "pricing": "定价",
+    "dashboard": "仪表盘"
+  },
+  "home": {
+    "hero": {
+      "title": "更快地发布你的独立产品",
+      "subtitle": "基于 Nuxt 4 的启动套件，包含落地页、仪表盘、API 和 Cloudflare Pages SSR 部署。",
+      "start": "开始构建",
+      "pricing": "查看定价"
+    },
+    "features": {
+      "heading": "为小产品而生",
+      "subtitle": "保持启动套件的实用性，不强制在一开始就加入认证、数据库或支付。",
+      "items": [
+        {
+          "title": "Cloudflare Pages SSR",
+          "description": "Nuxt Nitro 面向 Cloudflare Pages，输出可直接部署的 dist 目录。"
+        },
+        {
+          "title": "产品外壳",
+          "description": "包含落地页、定价页、仪表盘和 API 示例，没有 CMS 或博客的预设。"
+        },
+        {
+          "title": "SEO 就绪",
+          "description": "站点地图、robots、结构化数据和脚本管理已配置完成。"
+        },
+        {
+          "title": "易于扩展",
+          "description": "仅在产品需要时添加认证、D1、KV、R2、Turnstile 或支付功能。"
+        }
+      ]
+    }
+  }
+}
