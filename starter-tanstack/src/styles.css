@@ -1,0 +1,28 @@
+@import "./globals.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: #246f76;
+}
+
+code {
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+pre code {
+  background: none;
+}

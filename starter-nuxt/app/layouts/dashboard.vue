@@ -69,7 +69,7 @@ const navItems = computed(() => [
             <SidebarMenuButton as-child>
               <NuxtLinkLocale to="/">
                 <ArrowLeft class="size-4" />
-                <span>Back to site</span>
+                <span>{{ $t('nav.backToSite') }}</span>
               </NuxtLinkLocale>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -77,6 +77,7 @@ const navItems = computed(() => [
       </SidebarFooter>
     </Sidebar>
 
+      <NuxtLoadingIndicator />
     <SidebarInset>
       <header class="flex h-12 shrink-0 items-center gap-2 border-b px-4">
         <SidebarTrigger class="-ml-1" />

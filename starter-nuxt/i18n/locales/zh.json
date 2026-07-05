@@ -2,7 +2,8 @@
   "nav": {
     "features": "功能",
     "pricing": "定价",
-    "dashboard": "仪表盘"
+    "dashboard": "仪表盘",
+    "backToSite": "返回首页"
   },
   "home": {
     "hero": {
@@ -14,24 +15,30 @@
     "features": {
       "heading": "为小产品而生",
       "subtitle": "保持启动套件的实用性，不强制在一开始就加入认证、数据库或支付。",
-      "items": [
-        {
+      "items": {
+        "cloudflare": {
           "title": "Cloudflare Pages SSR",
           "description": "Nuxt Nitro 面向 Cloudflare Pages，输出可直接部署的 dist 目录。"
         },
-        {
+        "product": {
           "title": "产品外壳",
           "description": "包含落地页、定价页、仪表盘和 API 示例，没有 CMS 或博客的预设。"
         },
-        {
+        "seo": {
           "title": "SEO 就绪",
           "description": "站点地图、robots、结构化数据和脚本管理已配置完成。"
         },
-        {
+        "extend": {
           "title": "易于扩展",
           "description": "仅在产品需要时添加认证、D1、KV、R2、Turnstile 或支付功能。"
         }
-      ]
+      }
     }
+  },
+  "error": {
+    "title": "错误 {code}",
+    "notFound": "页面未找到",
+    "unknown": "发生了一个错误",
+    "goHome": "返回首页"
   }
 }

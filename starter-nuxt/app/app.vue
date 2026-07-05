@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Toaster } from 'vue-sonner'
+import 'vue-sonner/style.css'
+
 useHead({
   script: [
     {
@@ -13,5 +16,7 @@ useHead({
 <template>
   <NuxtLayout>
     <NuxtPage />
+    <Toaster />
   </NuxtLayout>
 </template>
+

@@ -1,0 +1,7 @@
+# Security headers — uncomment and adjust for production
+# Full CSP requires nonce strategy; defer to deploy-time configuration
+#   Content-Security-Policy: default-src 'self'
+#   X-Content-Type-Options: nosniff
+#   Referrer-Policy: strict-origin-when-cross-origin
+#   X-Frame-Options: DENY
+#   Permissions-Policy: camera=(), microphone=(), geolocation=()

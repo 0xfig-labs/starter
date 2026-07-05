@@ -8,27 +8,30 @@ Nuxt 4 starter for indie products deployed with **SSR on Cloudflare Pages**.
 app/
   app.config.ts              # product name, links, UI theme
   app.vue                    # root shell only
-  assets/css/main.css        # Tailwind / Nuxt UI theme
+  assets/css/tailwind.css    # Tailwind v4 + shadcn-vue tokens
   components/
     app/                     # layout-level UI: header, footer, app shell
     marketing/               # landing-page sections
+    ui/                      # shadcn-vue generated components
   composables/               # shared client/server-safe composables
-  layouts/                   # Nuxt UI layouts: default marketing, dashboard app shell
+  layouts/                   # layouts: default (public), dashboard (product)
   pages/                     # public routes and app routes
     dashboard/               # product app area placeholder
+  plugins/                   # Nuxt plugins (ssr-width, etc.)
 server/
   api/                       # Nitro API routes for Cloudflare Pages Functions
   utils/                     # server-only helpers
-public/                      # static assets
+i18n/locales/                # translation files (en, zh)
+public/                      # static assets, _headers
 ```
 
 ## Stack
 
 - Nuxt 4
-- Nuxt UI
+- shadcn-vue (reka-ui)
 - Tailwind CSS v4
 - Pinia
-- Nuxt SEO / Image / Scripts / i18n
+- Nuxt SEO / i18n
 - Cloudflare Pages SSR via Nitro `cloudflare_pages` preset
 
 ## Setup
@@ -81,7 +84,7 @@ For Cloudflare dashboard deployments, use:
 ## Layouts
 
 - `default`: public marketing layout with header, footer, and landing pages.
-- `dashboard`: app/product layout with Nuxt UI dashboard sidebar, navbar, and content panel.
+- `dashboard`: product layout with shadcn-vue sidebar, header, and content panel.
 
 Use `definePageMeta({ layout: "dashboard" })` for authenticated product pages.
 
@@ -100,5 +103,5 @@ Use `pnpm verify` before handing off non-trivial changes.
 ## Responsive layout
 
 - Public pages use the `default` layout with desktop navigation and a mobile dropdown menu.
-- Product pages use the `dashboard` layout with a responsive Nuxt UI sidebar toggle and padded content panel.
+- Product pages use the `dashboard` layout with a responsive shadcn-vue sidebar toggle and padded content panel.
 - Prefer Tailwind responsive utilities (`sm:`, `md:`, `lg:`, `xl:`) before custom media queries.

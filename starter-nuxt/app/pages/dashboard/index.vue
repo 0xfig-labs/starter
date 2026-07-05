@@ -6,6 +6,10 @@ definePageMeta({
 useSeoMeta({
   title: 'Dashboard'
 })
+
+const { data, status } = useAsyncData('health', () =>
+  $fetch('/api/health')
+)
 </script>
 
 <template>
@@ -20,6 +24,42 @@ useSeoMeta({
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <Card v-if="status === 'success'">
+        <CardHeader class="pb-2">
+          <CardTitle class="text-sm font-medium">
+            Service
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-3xl font-semibold">
+            {{ data?.service ?? '—' }}
+          </p>
+          <div class="mt-1 flex items-center gap-2">
+            <span class="size-2 rounded-full bg-green-500" />
+            <span class="text-xs text-muted-foreground">API online</span>
+          </div>
+        </CardContent>
+      </Card>
+      <Card v-else-if="status === 'error'">
+        <CardHeader class="pb-2">
+          <CardTitle class="text-sm font-medium">
+            Service
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p class="text-sm text-destructive">Failed to load</p>
+        </CardContent>
+      </Card>
+      <Card v-else>
+        <CardHeader class="pb-2">
+          <Skeleton class="h-4 w-16" />
+        </CardHeader>
+        <CardContent>
+          <Skeleton class="h-8 w-24" />
+          <Skeleton class="mt-2 h-3 w-20" />
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader class="pb-2">
           <CardTitle class="text-sm font-medium">
@@ -49,24 +89,6 @@ useSeoMeta({
           <p class="text-xs text-muted-foreground mt-1">
             Add auth when accounts are real.
           </p>
-        </CardContent>
-      </Card>
-
-      <Card class="sm:col-span-2 xl:col-span-1">
-        <CardHeader class="pb-2">
-          <CardTitle class="text-sm font-medium">
-            API
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Button
-            variant="outline"
-            size="sm"
-            as-child
-          >
-            <!-- eslint-disable-next-line link-checker/valid-route, link-checker/valid-sitemap-link -->
-            <NuxtLink to="/api/health">Check health</NuxtLink>
-          </Button>
         </CardContent>
       </Card>
     </div>

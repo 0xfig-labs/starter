@@ -4,10 +4,10 @@ import { Cloud, LayoutDashboard, SearchCheck, Plug } from '@lucide/vue'
 const { t } = useI18n()
 
 const features = computed(() => [
-  { icon: Cloud, title: t('home.features.items.0.title'), description: t('home.features.items.0.description') },
-  { icon: LayoutDashboard, title: t('home.features.items.1.title'), description: t('home.features.items.1.description') },
-  { icon: SearchCheck, title: t('home.features.items.2.title'), description: t('home.features.items.2.description') },
-  { icon: Plug, title: t('home.features.items.3.title'), description: t('home.features.items.3.description') }
+  { icon: Cloud, title: t('home.features.items.cloudflare.title'), description: t('home.features.items.cloudflare.description') },
+  { icon: LayoutDashboard, title: t('home.features.items.product.title'), description: t('home.features.items.product.description') },
+  { icon: SearchCheck, title: t('home.features.items.seo.title'), description: t('home.features.items.seo.description') },
+  { icon: Plug, title: t('home.features.items.extend.title'), description: t('home.features.items.extend.description') }
 ])
 </script>
 

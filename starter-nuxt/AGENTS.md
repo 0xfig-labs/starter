@@ -7,10 +7,13 @@ This is a Nuxt 4 starter for indie products deployed with SSR on Cloudflare Page
 ## Stack
 
 - Nuxt 4
-- Nuxt UI
+- shadcn-vue (reka-ui)
 - Tailwind CSS v4
 - Pinia
-- Nuxt SEO / Image / Scripts / i18n
+- Nuxt SEO / i18n
+- Zod (server input validation)
+- vue-sonner (toast notifications)
+- Vitest + @nuxt/test-utils (testing)
 - Cloudflare Pages SSR through Nitro `cloudflare_pages`
 - pnpm
 
@@ -22,6 +25,7 @@ This is a Nuxt 4 starter for indie products deployed with SSR on Cloudflare Page
 - Product layout: `app/layouts/dashboard.vue`
 - Layout-level UI: `app/components/app/`
 - Landing sections: `app/components/marketing/`
+- Tests: `tests/`
 - Shared composables: `app/composables/`
 - Nitro API routes: `server/api/`
 - Server-only helpers: `server/utils/`
@@ -42,6 +46,8 @@ Keep Cloudflare Pages SSR working:
 
 ## Common tasks
 
+- Add composable: create `app/composables/use<Name>.ts`.
+- Add middleware: create `app/middleware/<name>.ts`.
 - Add landing section: create `app/components/marketing/<Name>.vue`, then use it in `app/pages/index.vue`.
 - Add dashboard page: create route under `app/pages/dashboard/` and use `definePageMeta({ layout: "dashboard" })`.
 - Add API route: create `server/api/<name>.<method>.ts`.

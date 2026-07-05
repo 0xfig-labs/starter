@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+
+# Combined pre-commit hook for monorepo
+# Delegates to project-specific hooks based on staged files
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+# Check which projects have staged changes
+STAGED_FILES=$(git diff --cached --name-only)
+
+run_tauri_hooks() {
+	if [ -f "$REPO_ROOT/starter-tauri/.vite-hooks/pre-commit" ]; then
+		cd "$REPO_ROOT/starter-tauri" && .vite-hooks/pre-commit
+		cd "$REPO_ROOT"
+	fi
+}
+
+run_tanstack_hooks() {
+	if command -v bunx >/dev/null 2>&1; then
+		cd "$REPO_ROOT/starter-tanstack"
+		bunx lint-staged
+		bun run check
+		bun run test
+		cd "$REPO_ROOT"
+	fi
+}
+
+HAS_TAURI=$(echo "$STAGED_FILES" | grep -c "^starter-tauri/" 2>/dev/null || true)
+HAS_TANSTACK=$(echo "$STAGED_FILES" | grep -c "^starter-tanstack/" 2>/dev/null || true)
+
+[ "$HAS_TAURI" -gt 0 ] && run_tauri_hooks
+[ "$HAS_TANSTACK" -gt 0 ] && run_tanstack_hooks
+
+# If neither matched, run tanstack hooks by default (for when working inside the project)
+if [ "$HAS_TAURI" -eq 0 ] && [ "$HAS_TANSTACK" -eq 0 ]; then
+	if echo "$PWD" | grep -q "starter-tanstack"; then
+		run_tanstack_hooks
+	elif echo "$PWD" | grep -q "starter-tauri"; then
+		run_tauri_hooks
+	fi
+fi
+
+exit 0

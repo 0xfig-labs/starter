@@ -13,8 +13,7 @@ const appConfig = useAppConfig()
         size="sm"
         as-child
       >
-        <!-- eslint-disable-next-line link-checker/valid-route, link-checker/valid-sitemap-link -->
-        <NuxtLink to="/api/health">Status</NuxtLink>
+        <a href="/api/health">Status</a>
       </Button>
     </div>
   </footer>

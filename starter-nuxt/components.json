@@ -16,7 +16,7 @@
     "lib": "@/lib",
     "composables": "@/composables"
   },
-  "font": "geist-sans",
+  "font": "public-sans",
   "iconLibrary": "lucide",
   "rtl": false,
   "pointer": false,

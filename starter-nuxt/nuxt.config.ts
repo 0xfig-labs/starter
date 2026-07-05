@@ -5,24 +5,29 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     'shadcn-nuxt',
     '@nuxt/hints',
-    '@nuxt/image',
-    '@nuxt/scripts',
     '@nuxtjs/i18n',
     '@nuxtjs/seo',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@nuxt/test-utils/module'
   ],
+  hints: {
+    // lazyLoad is noisy during dev and this starter has few components to optimize
+    features: {
+      lazyLoad: false
+    }
+  },
 
   devtools: {
-    enabled: true
   },
 
   css: ['~/assets/css/tailwind.css'],
-
+  // site.* is consumed by @nuxtjs/seo (sitemap/robots).
+  // app/app.config.ts site.* is consumed by UI components.
+  // Keep both in sync when changing name/url.
   site: {
     name: 'Indie Starter',
     url: 'https://example.pages.dev'
   },
-
   routeRules: {
     '/': { prerender: true },
     '/api/**': { prerender: false }
@@ -41,7 +46,19 @@ export default defineNuxtConfig({
   vite: {
     plugins: [
       tailwindcss()
-    ]
+    ],
+    optimizeDeps: {
+      include: [
+        '@lucide/vue',
+        '@unhead/schema-org/vue',
+        '@vueuse/core',
+        'class-variance-authority',
+        'clsx',
+        'reka-ui',
+        'tailwind-merge',
+        'vue-sonner'
+      ]
+    }
   },
 
   eslint: {
@@ -53,7 +70,13 @@ export default defineNuxtConfig({
     }
   },
 
+  linkChecker: {
+    // API routes are handled by Nitro, not Nuxt pages — exclude from link validation
+    exclude: ['/api/**']
+  },
+
   i18n: {
+    baseUrl: 'https://example.pages.dev',
     defaultLocale: 'en',
     locales: [
       { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },

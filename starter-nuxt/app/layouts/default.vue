@@ -2,6 +2,7 @@
 import { useColorMode } from '@vueuse/core'
 
 const appConfig = useAppConfig()
+const { locale } = useI18n()
 
 useColorMode({
   attribute: 'class',
@@ -9,9 +10,12 @@ useColorMode({
 })
 
 useHead({
-  meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+  ],
   link: [{ rel: 'icon', href: '/favicon.ico' }],
-  htmlAttrs: { lang: 'en' }
+  htmlAttrs: { lang: locale }
 })
 
 useSeoMeta({
@@ -23,6 +27,7 @@ useSeoMeta({
 
 <template>
   <div class="min-h-svh flex flex-col">
+    <NuxtLoadingIndicator />
     <AppHeader />
     <main class="flex-1">
       <slot />
@@ -30,3 +35,4 @@ useSeoMeta({
     <AppFooter />
   </div>
 </template>
+

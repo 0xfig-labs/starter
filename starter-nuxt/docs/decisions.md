@@ -11,7 +11,7 @@ The starter targets landing pages, pricing pages, dashboards, and small API prod
 ## Two layouts
 
 - `default`: public marketing layout with header, footer, and regular content area.
-- `dashboard`: product app shell using Nuxt UI dashboard sidebar and navbar.
+- `dashboard`: product app shell using shadcn-vue sidebar and navbar.
 
 ## No auth by default
 
