@@ -71,10 +71,9 @@ export default defineNuxtConfig({
   },
 
   linkChecker: {
-    // API routes are handled by Nitro, not Nuxt pages — exclude from link validation
-    exclude: ['/api/**']
+    // API routes are handled by Nitro, not Nuxt pages
+    excludeLinks: ['/api/**']
   },
-
   i18n: {
     baseUrl: 'https://example.pages.dev',
     defaultLocale: 'en',
