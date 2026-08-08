@@ -1,0 +1,6 @@
+import { app } from './app'
+
+export default {
+  fetch: app.fetch,
+  scheduled: async () => {},
+}
